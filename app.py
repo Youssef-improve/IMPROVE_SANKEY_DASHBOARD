@@ -7,7 +7,7 @@ import numpy as np
 import plotly.express as px
 import re
 import plotly.graph_objects as go
-  
+ ensure_db()   
 
 ATS_LIGHTS_CSS = """
 <style>
@@ -1503,10 +1503,10 @@ BASE_DIR = Path(__file__).parent
 LOGO_PATH = BASE_DIR / "assets" / "logo.png"
 # ====== Persistencia: SQLite con todos los parámetros ======
 DB_PATH = "/mount/tmp/db.sqlite"
-
 import sqlite3, os
 
 def ensure_db():
+  
     con = sqlite3.connect(DB_PATH, check_same_thread=False)
     cur = con.cursor()
 
@@ -1610,7 +1610,6 @@ def ensure_db():
     con.commit()
     con.close()
 
-    ensure_db()
     st.set_page_config(
     page_title="Improve Sankey",
     page_icon=str(LOGO_PATH),

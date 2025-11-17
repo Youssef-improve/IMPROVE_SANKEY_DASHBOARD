@@ -7,7 +7,7 @@ import numpy as np
 import plotly.express as px
 import re
 import plotly.graph_objects as go
-ensure_db()    
+import ensure_db()    
 
 ATS_LIGHTS_CSS = """
 <style>

@@ -7,7 +7,7 @@ import numpy as np
 import plotly.express as px
 import re
 import plotly.graph_objects as go
-    
+ensure_db()    
 
 ATS_LIGHTS_CSS = """
 <style>
@@ -307,7 +307,7 @@ def onoff_timeline(df: pd.DataFrame, cols: list[str], title: str,
         showlegend=False,
     )
 
-    # Fila superior arriba (como Grafana)
+    # Fila superior arriba 
     fig.update_yaxes(
         autorange="reversed",
         color="#8ea39a",
@@ -1509,6 +1509,33 @@ import sqlite3, os
 def ensure_db():
     con = sqlite3.connect(DB_PATH, check_same_thread=False)
     cur = con.cursor()
+
+    # Medidas instantáneas (por muestra)
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS measurements(
+        ts TEXT PRIMARY KEY,
+        source TEXT,
+        tag TEXT,
+        -- TENSIONES
+        V_L1N REAL, V_L2N REAL, V_L3N REAL,
+        V_L1L2 REAL, V_L2L3 REAL, V_L3L1 REAL,
+        -- (… lo que ya tengas aquí …)
+        PF_TOT REAL, FREQ REAL
+    )
+    """)
+
+    # 👉 NUEVO: tabla para estados ON/OFF de máquina, apf, svg
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS states(
+        ts TEXT PRIMARY KEY,
+        maquina INTEGER,
+        apf INTEGER,
+        svg INTEGER
+    )
+    """)
+
+    con.commit()
+    con.close()
 
     # Medidas instantáneas (por muestra)
     cur.execute("""

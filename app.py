@@ -6,8 +6,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import re
-import plotly.graph_objects as go
- ensure_db()   
+import plotly.graph_objects as go  
 
 ATS_LIGHTS_CSS = """
 <style>
@@ -1615,7 +1614,7 @@ def ensure_db():
     page_icon=str(LOGO_PATH),
     layout="wide"
     )
-
+ ensure_db()
 
 from dotenv import load_dotenv
 

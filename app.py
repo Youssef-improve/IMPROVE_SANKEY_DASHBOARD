@@ -1502,12 +1502,9 @@ def save_to_db(df: pd.DataFrame):
 BASE_DIR = Path(__file__).parent
 LOGO_PATH = BASE_DIR / "assets" / "logo.png"
 # ====== Persistencia: SQLite con todos los parámetros ======
-DB_PATH = "data/db.sqlite"
+DB_PATH = "/mount/tmp/db.sqlite"
 
 import sqlite3, os
-os.makedirs("data", exist_ok=True)
-
-DB_PATH = "data/db.sqlite"
 
 def ensure_db():
     con = sqlite3.connect(DB_PATH, check_same_thread=False)

@@ -1614,7 +1614,7 @@ def ensure_db():
     page_icon=str(LOGO_PATH),
     layout="wide"
     )
- ensure_db()
+ensure_db()
 
 from dotenv import load_dotenv
 

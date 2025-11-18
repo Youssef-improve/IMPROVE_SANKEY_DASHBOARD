@@ -1504,8 +1504,7 @@ LOGO_PATH = BASE_DIR / "assets" / "logo.png"
 import sqlite3
 import os
 
-# Crear carpeta /mount/data si no existe (Streamlit Cloud)
-os.makedirs("/mount/data", exist_ok=True)
+DB_PATH = os.path.join("/tmp", "improve_sankey.db")
 
 DB_PATH = os.path.join("/mount/data", "improve_sankey.db")
 

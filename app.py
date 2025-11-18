@@ -1506,8 +1506,6 @@ import os
 
 DB_PATH = os.path.join("/tmp", "improve_sankey.db")
 
-DB_PATH = os.path.join("/mount/data", "improve_sankey.db")
-
 def ensure_db():
   
     con = sqlite3.connect(DB_PATH, check_same_thread=False)

@@ -1507,34 +1507,19 @@ import os
 DB_PATH = os.path.join("/tmp", "improve_sankey.db")
 
 def ensure_db():
-  
     con = sqlite3.connect(DB_PATH, check_same_thread=False)
     cur = con.cursor()
 
-    # Medidas instantáneas (por muestra)
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS measurements(
-        ts TEXT PRIMARY KEY,
-        source TEXT,
-        tag TEXT,
-        -- TENSIONES
-        V_L1N REAL, V_L2N REAL, V_L3N REAL,
-        V_L1L2 REAL, V_L2L3 REAL, V_L3L1 REAL,
-        -- (… lo que ya tengas aquí …)
-        PF_TOT REAL, FREQ REAL
-    )
-    """)
-
-    # 👉 NUEVO: tabla para estados ON/OFF de máquina, apf, svg
+    # 👉 Estados ON/OFF de máquina, APF, SVG
     cur.execute("""
     CREATE TABLE IF NOT EXISTS states(
-        ts TEXT PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ts TEXT,
         maquina INTEGER,
         apf INTEGER,
         svg INTEGER
-    )
+    );
     """)
-
 
     # Medidas instantáneas (por muestra)
     cur.execute("""
@@ -1555,7 +1540,7 @@ def ensure_db():
         -- THD
         THD_V_L1 REAL, THD_V_L2 REAL, THD_V_L3 REAL,
         THD_I_L1 REAL, THD_I_L2 REAL, THD_I_L3 REAL,
-        -- Desequilibrio y demanda (por si los usas luego)
+        -- Desequilibrio y demanda
         UNB_U REAL, UNB_I REAL, DEMANDA_KW REAL,
         -- Temperaturas
         CORE_TEMP REAL, R_TEMP REAL, S_TEMP REAL, T_TEMP REAL,
@@ -1576,8 +1561,8 @@ def ensure_db():
     cur.execute("""
     CREATE TABLE IF NOT EXISTS energy_counters (
         ts TEXT PRIMARY KEY,
-        EP_IMP REAL, EP_EXP REAL, -- kWh import/export
-        EQ_IMP REAL, EQ_EXP REAL -- kvarh import/export
+        EP_IMP REAL, EP_EXP REAL,
+        EQ_IMP REAL, EQ_EXP REAL
     );
     """)
 
@@ -1606,6 +1591,7 @@ def ensure_db():
     # Índices para gráficas rápidas
     cur.execute("CREATE INDEX IF NOT EXISTS idx_meas_ts ON measurements(ts);")
     cur.execute("CREATE INDEX IF NOT EXISTS idx_energy_ts ON energy_counters(ts);")
+
     con.commit()
     con.close()
 

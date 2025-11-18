@@ -1501,8 +1501,10 @@ def save_to_db(df: pd.DataFrame):
 BASE_DIR = Path(__file__).parent
 LOGO_PATH = BASE_DIR / "assets" / "logo.png"
 # ====== Persistencia: SQLite con todos los parámetros ======
-DB_PATH = "/mount/tmp/db.sqlite"
-import sqlite3, os
+import sqlite3
+import os
+
+DB_PATH = os.path.join("/mount/data", "improve_sankey.db")
 
 def ensure_db():
   

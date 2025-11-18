@@ -1930,16 +1930,24 @@ modo = "OFF"
 
 from datetime import datetime
 
-def save_state(conn, m_on: bool, a_on: bool, s_on: bool):
-    from datetime import datetime
-    conn.execute(
+def save_state(m_on: bool, a_on: bool, s_on: bool):
+    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+    cur = conn.cursor()
+
+    ts = datetime.now().isoformat(timespec="seconds")
+
+    cur.execute(
         "INSERT INTO states (ts, maquina, apf, svg) VALUES (?, ?, ?, ?)",
-        (datetime.now().isoformat(timespec="seconds"),
-        1 if m_on else 0,
-        1 if a_on else 0,
-        1 if s_on else 0)
+        (
+            ts,
+            1 if m_on else 0,
+            1 if a_on else 0,
+            1 if s_on else 0,
+        ),
     )
+
     conn.commit()
+    conn.close()
     
 # Guardar cambio solo si hay modificación
 prev = (

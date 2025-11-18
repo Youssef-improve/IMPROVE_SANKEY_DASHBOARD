@@ -1535,8 +1535,6 @@ def ensure_db():
     )
     """)
 
-    con.commit()
-    con.close()
 
     # Medidas instantáneas (por muestra)
     cur.execute("""

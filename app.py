@@ -1958,7 +1958,7 @@ prev = (
 now = (val_m, val_apf, val_svg)
 
 if prev != now:
-    save_state(conn, val_m, val_apf, val_svg)
+    save_state(val_m, val_apf, val_svg)
     st.session_state["_prev_m"], st.session_state["_prev_apf"], st.session_state["_prev_svg"] = now
 
 now = datetime.now()
